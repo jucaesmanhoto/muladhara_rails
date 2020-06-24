@@ -1,3 +1,3 @@
 class Especialty < ApplicationRecord
-  validates presence: true
+  validates :especialty_name, presence: true
 end

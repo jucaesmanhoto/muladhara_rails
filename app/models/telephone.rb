@@ -1,3 +1,3 @@
 class Telephone < ApplicationRecord
-  validates presence: true
+  validates :number, :area_code, :country_code, presence: true
 end
