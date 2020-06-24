@@ -10,14 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2020_06_24_134809) do
+
+ActiveRecord::Schema.define(version: 2020_06_24_141626) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+
   create_table "available_times", force: :cascade do |t|
     t.datetime "initial_timestamp"
     t.datetime "final_timestamp"
+    
+  create_table "especialties", force: :cascade do |t|
+    t.string "especialty_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "content"
+    t.integer "rating"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "telephones", force: :cascade do |t|
+    t.string "number"
+    t.integer "area_code"
+    t.integer "country_code"
+
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
