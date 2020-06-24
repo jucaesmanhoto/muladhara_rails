@@ -1,0 +1,2 @@
+class AvailableTime < ApplicationRecord
+end
