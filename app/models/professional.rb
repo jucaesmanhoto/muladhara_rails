@@ -1,5 +1,6 @@
 class Professional < ApplicationRecord
   belongs_to :user
+  has_many :appointments
 
   has_many :professional_telephones
   has_many :professional_addresses
