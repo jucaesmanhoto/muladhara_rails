@@ -4,7 +4,9 @@ class Place < ApplicationRecord
   belongs_to :user
 
   has_many :rooms
+
   has_many :place_pictures
+  has_many :pictures, through: :place_pictures
 
   has_many :addresses, through: :place_addresses
   has_many :place_addresses
@@ -12,7 +14,7 @@ class Place < ApplicationRecord
   has_many :telephones, through: :place_telephones
   has_many :place_telephones
 
-  has_many :professionals, through: :professional_places
+  has_many :professionals, through: :place_professionals
   has_many :professional_places
 
   has_many :reviews, through: :place_reviews
