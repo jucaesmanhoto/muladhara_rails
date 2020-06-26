@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_06_26_152228) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -169,6 +170,14 @@ ActiveRecord::Schema.define(version: 2020_06_26_152228) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "room_features", force: :cascade do |t|
+    t.string "feature_name"
+    t.bigint "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_room_features_on_room_id"
+  end
+
   create_table "room_pictures", force: :cascade do |t|
     t.bigint "room_id", null: false
     t.bigint "picture_id", null: false
@@ -228,6 +237,7 @@ ActiveRecord::Schema.define(version: 2020_06_26_152228) do
   add_foreign_key "professional_telephones", "professionals"
   add_foreign_key "professional_telephones", "telephones"
   add_foreign_key "professionals", "users"
+  add_foreign_key "room_features", "rooms"
   add_foreign_key "room_pictures", "pictures"
   add_foreign_key "room_pictures", "rooms"
   add_foreign_key "rooms", "places"
