@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_190050) do
+ActiveRecord::Schema.define(version: 2020_06_26_201753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 2020_06_24_190050) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-
   create_table "appointments", force: :cascade do |t|
     t.decimal "price"
     t.bigint "interagent_id", null: false
@@ -75,6 +74,15 @@ ActiveRecord::Schema.define(version: 2020_06_24_190050) do
     t.string "especialty_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "interagent_reviews", force: :cascade do |t|
+    t.bigint "review_id", null: false
+    t.bigint "interagent_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["interagent_id"], name: "index_interagent_reviews_on_interagent_id"
+    t.index ["review_id"], name: "index_interagent_reviews_on_review_id"
   end
 
   create_table "interagents", force: :cascade do |t|
@@ -222,6 +230,8 @@ ActiveRecord::Schema.define(version: 2020_06_24_190050) do
   add_foreign_key "appointments", "interagents"
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "rooms"
+  add_foreign_key "interagent_reviews", "interagents"
+  add_foreign_key "interagent_reviews", "reviews"
   add_foreign_key "interagents", "users"
   add_foreign_key "place_addresses", "addresses"
   add_foreign_key "place_addresses", "users"
