@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_190050) do
 
 
   create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name", null: false 
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
