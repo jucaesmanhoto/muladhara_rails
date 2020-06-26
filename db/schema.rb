@@ -12,14 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2020_06_24_190050) do
 
-
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-
   create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false 
+    t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
@@ -52,11 +49,11 @@ ActiveRecord::Schema.define(version: 2020_06_24_190050) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-
-
   create_table "available_times", force: :cascade do |t|
     t.datetime "initial_timestamp"
     t.datetime "final_timestamp"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "especialties", force: :cascade do |t|
@@ -81,7 +78,6 @@ ActiveRecord::Schema.define(version: 2020_06_24_190050) do
     t.string "number"
     t.integer "area_code"
     t.integer "country_code"
-
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
