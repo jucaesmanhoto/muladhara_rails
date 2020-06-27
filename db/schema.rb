@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_26_201753) do
+ActiveRecord::Schema.define(version: 2020_06_27_200545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
   end
 
   create_table "appointments", force: :cascade do |t|
-    t.decimal "price"
+    t.integer "price"
     t.bigint "interagent_id", null: false
     t.bigint "professional_id", null: false
     t.bigint "room_id", null: false
@@ -66,12 +66,6 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
   create_table "available_times", force: :cascade do |t|
     t.datetime "initial_timestamp"
     t.datetime "final_timestamp"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "especialties", force: :cascade do |t|
-    t.string "especialty_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -126,6 +120,15 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
     t.index ["professional_id"], name: "index_place_professionals_on_professional_id"
   end
 
+  create_table "place_reviews", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.bigint "review_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["place_id"], name: "index_place_reviews_on_place_id"
+    t.index ["review_id"], name: "index_place_reviews_on_review_id"
+  end
+
   create_table "place_telephones", force: :cascade do |t|
     t.bigint "telephone_id", null: false
     t.bigint "place_id", null: false
@@ -150,6 +153,33 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["address_id"], name: "index_professional_addresses_on_address_id"
     t.index ["professional_id"], name: "index_professional_addresses_on_professional_id"
+  end
+
+  create_table "professional_available_times", force: :cascade do |t|
+    t.bigint "available_time_id", null: false
+    t.bigint "professional_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["available_time_id"], name: "index_professional_available_times_on_available_time_id"
+    t.index ["professional_id"], name: "index_professional_available_times_on_professional_id"
+  end
+
+  create_table "professional_reviews", force: :cascade do |t|
+    t.bigint "professional_id", null: false
+    t.bigint "review_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["professional_id"], name: "index_professional_reviews_on_professional_id"
+    t.index ["review_id"], name: "index_professional_reviews_on_review_id"
+  end
+
+  create_table "professional_specialties", force: :cascade do |t|
+    t.bigint "professional_id", null: false
+    t.bigint "specialty_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["professional_id"], name: "index_professional_specialties_on_professional_id"
+    t.index ["specialty_id"], name: "index_professional_specialties_on_specialty_id"
   end
 
   create_table "professional_telephones", force: :cascade do |t|
@@ -178,8 +208,17 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "room_available_times", force: :cascade do |t|
+    t.bigint "available_time_id", null: false
+    t.bigint "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["available_time_id"], name: "index_room_available_times_on_available_time_id"
+    t.index ["room_id"], name: "index_room_available_times_on_room_id"
+  end
+
   create_table "room_features", force: :cascade do |t|
-    t.string "feature_name"
+    t.string "name"
     t.bigint "room_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -195,6 +234,24 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
     t.index ["room_id"], name: "index_room_pictures_on_room_id"
   end
 
+  create_table "room_reviews", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "review_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["review_id"], name: "index_room_reviews_on_review_id"
+    t.index ["room_id"], name: "index_room_reviews_on_room_id"
+  end
+
+  create_table "room_specialties", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "specialty_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_room_specialties_on_room_id"
+    t.index ["specialty_id"], name: "index_room_specialties_on_specialty_id"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.string "name"
     t.integer "price"
@@ -202,6 +259,12 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["place_id"], name: "index_rooms_on_place_id"
+  end
+
+  create_table "specialties", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "telephones", force: :cascade do |t|
@@ -239,16 +302,30 @@ ActiveRecord::Schema.define(version: 2020_06_26_201753) do
   add_foreign_key "place_pictures", "places"
   add_foreign_key "place_professionals", "places"
   add_foreign_key "place_professionals", "professionals"
+  add_foreign_key "place_reviews", "places"
+  add_foreign_key "place_reviews", "reviews"
   add_foreign_key "place_telephones", "places"
   add_foreign_key "place_telephones", "telephones"
   add_foreign_key "places", "users"
   add_foreign_key "professional_addresses", "addresses"
   add_foreign_key "professional_addresses", "professionals"
+  add_foreign_key "professional_available_times", "available_times"
+  add_foreign_key "professional_available_times", "professionals"
+  add_foreign_key "professional_reviews", "professionals"
+  add_foreign_key "professional_reviews", "reviews"
+  add_foreign_key "professional_specialties", "professionals"
+  add_foreign_key "professional_specialties", "specialties"
   add_foreign_key "professional_telephones", "professionals"
   add_foreign_key "professional_telephones", "telephones"
   add_foreign_key "professionals", "users"
+  add_foreign_key "room_available_times", "available_times"
+  add_foreign_key "room_available_times", "rooms"
   add_foreign_key "room_features", "rooms"
   add_foreign_key "room_pictures", "pictures"
   add_foreign_key "room_pictures", "rooms"
+  add_foreign_key "room_reviews", "reviews"
+  add_foreign_key "room_reviews", "rooms"
+  add_foreign_key "room_specialties", "rooms"
+  add_foreign_key "room_specialties", "specialties"
   add_foreign_key "rooms", "places"
 end
