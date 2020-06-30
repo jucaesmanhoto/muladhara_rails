@@ -40,3 +40,7 @@ yarn-debug.log*
 *.swp
 .DS_Store
 .env*
+
+# Ignore cloudinary.yml, i am running to solve issue with cloudinary
+
+config/cloudinary.yml
