@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_26_152228) do
-
+ActiveRecord::Schema.define(version: 2020_06_30_115743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +143,15 @@ ActiveRecord::Schema.define(version: 2020_06_26_152228) do
     t.index ["professional_id"], name: "index_professional_addresses_on_professional_id"
   end
 
+  create_table "professional_available_times", force: :cascade do |t|
+    t.bigint "professional_id", null: false
+    t.bigint "available_time_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["available_time_id"], name: "index_professional_available_times_on_available_time_id"
+    t.index ["professional_id"], name: "index_professional_available_times_on_professional_id"
+  end
+
   create_table "professional_telephones", force: :cascade do |t|
     t.bigint "professional_id", null: false
     t.bigint "telephone_id", null: false
@@ -234,6 +242,8 @@ ActiveRecord::Schema.define(version: 2020_06_26_152228) do
   add_foreign_key "places", "users"
   add_foreign_key "professional_addresses", "addresses"
   add_foreign_key "professional_addresses", "professionals"
+  add_foreign_key "professional_available_times", "available_times"
+  add_foreign_key "professional_available_times", "professionals"
   add_foreign_key "professional_telephones", "professionals"
   add_foreign_key "professional_telephones", "telephones"
   add_foreign_key "professionals", "users"
