@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_30_132358) do
+ActiveRecord::Schema.define(version: 2020_06_30_185531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,11 +92,11 @@ ActiveRecord::Schema.define(version: 2020_06_30_132358) do
 
   create_table "place_addresses", force: :cascade do |t|
     t.bigint "address_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "place_id", null: false
     t.index ["address_id"], name: "index_place_addresses_on_address_id"
-    t.index ["user_id"], name: "index_place_addresses_on_user_id"
+    t.index ["place_id"], name: "index_place_addresses_on_place_id"
   end
 
   create_table "place_pictures", force: :cascade do |t|
@@ -143,25 +143,6 @@ ActiveRecord::Schema.define(version: 2020_06_30_132358) do
     t.index ["professional_id"], name: "index_professional_addresses_on_professional_id"
   end
 
-  create_table "professional_available_times", force: :cascade do |t|
-    t.bigint "professional_id", null: false
-    t.bigint "available_time_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["available_time_id"], name: "index_professional_available_times_on_available_time_id"
-    t.index ["professional_id"], name: "index_professional_available_times_on_professional_id"
-  end
-
-  create_table "professional_reviews", force: :cascade do |t|
-    t.integer "rate"
-    t.bigint "professional_id", null: false
-    t.bigint "review_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["professional_id"], name: "index_professional_reviews_on_professional_id"
-    t.index ["review_id"], name: "index_professional_reviews_on_review_id"
-  end
-
   create_table "professional_telephones", force: :cascade do |t|
     t.bigint "professional_id", null: false
     t.bigint "telephone_id", null: false
@@ -186,15 +167,6 @@ ActiveRecord::Schema.define(version: 2020_06_30_132358) do
     t.integer "rating"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "room_available_times", force: :cascade do |t|
-    t.bigint "room_id", null: false
-    t.bigint "available_time_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["available_time_id"], name: "index_room_available_times_on_available_time_id"
-    t.index ["room_id"], name: "index_room_available_times_on_room_id"
   end
 
   create_table "room_features", force: :cascade do |t|
@@ -254,7 +226,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_132358) do
   add_foreign_key "appointments", "rooms"
   add_foreign_key "interagents", "users"
   add_foreign_key "place_addresses", "addresses"
-  add_foreign_key "place_addresses", "users"
+  add_foreign_key "place_addresses", "places"
   add_foreign_key "place_pictures", "pictures"
   add_foreign_key "place_pictures", "places"
   add_foreign_key "place_professionals", "places"
@@ -264,15 +236,9 @@ ActiveRecord::Schema.define(version: 2020_06_30_132358) do
   add_foreign_key "places", "users"
   add_foreign_key "professional_addresses", "addresses"
   add_foreign_key "professional_addresses", "professionals"
-  add_foreign_key "professional_available_times", "available_times"
-  add_foreign_key "professional_available_times", "professionals"
-  add_foreign_key "professional_reviews", "professionals"
-  add_foreign_key "professional_reviews", "reviews"
   add_foreign_key "professional_telephones", "professionals"
   add_foreign_key "professional_telephones", "telephones"
   add_foreign_key "professionals", "users"
-  add_foreign_key "room_available_times", "available_times"
-  add_foreign_key "room_available_times", "rooms"
   add_foreign_key "room_features", "rooms"
   add_foreign_key "room_pictures", "pictures"
   add_foreign_key "room_pictures", "rooms"
