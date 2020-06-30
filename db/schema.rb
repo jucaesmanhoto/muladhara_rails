@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_27_200545) do
+ActiveRecord::Schema.define(version: 2020_06_30_185531) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,11 +96,11 @@ ActiveRecord::Schema.define(version: 2020_06_27_200545) do
 
   create_table "place_addresses", force: :cascade do |t|
     t.bigint "address_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "place_id", null: false
     t.index ["address_id"], name: "index_place_addresses_on_address_id"
-    t.index ["user_id"], name: "index_place_addresses_on_user_id"
+    t.index ["place_id"], name: "index_place_addresses_on_place_id"
   end
 
   create_table "place_pictures", force: :cascade do |t|
@@ -284,6 +285,9 @@ ActiveRecord::Schema.define(version: 2020_06_27_200545) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "admin"
+    t.string "name"
+    t.string "role"
+    t.string "document"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -297,7 +301,7 @@ ActiveRecord::Schema.define(version: 2020_06_27_200545) do
   add_foreign_key "interagent_reviews", "reviews"
   add_foreign_key "interagents", "users"
   add_foreign_key "place_addresses", "addresses"
-  add_foreign_key "place_addresses", "users"
+  add_foreign_key "place_addresses", "places"
   add_foreign_key "place_pictures", "pictures"
   add_foreign_key "place_pictures", "places"
   add_foreign_key "place_professionals", "places"

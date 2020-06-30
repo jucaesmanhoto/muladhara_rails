@@ -1,5 +1,5 @@
 class Place < ApplicationRecord
-  validates :rooms, :place_pictures, :place_addresses, :place_telephones, :professional_places, :place_reviews, presence: true
+  #validates :rooms, :place_pictures, :place_addresses, :place_telephones, :professional_places, :place_reviews, presence: true
 
   belongs_to :user
 
