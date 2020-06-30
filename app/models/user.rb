@@ -1,9 +1,10 @@
 class User < ApplicationRecord
   validates :name, :document, presence: true
 
-  has_many :appointments,through: :interagent, dependent: :destroy
-  has_many :places
   has_many :interagents
+  has_many :places
+
+  has_many :appointments, through: :interagents, dependent: :destroy
 
   has_one_attached :photo # Cloudinary
 
